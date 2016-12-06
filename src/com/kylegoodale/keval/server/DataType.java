@@ -10,4 +10,5 @@ public interface DataType {
     static Hashtable<String, Command> getCommandHooks(int type){
         return new Hashtable<>();
     };
+
 }

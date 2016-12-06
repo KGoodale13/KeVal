@@ -23,6 +23,7 @@ public class StringType implements DataType {
         return this.value;
     }
 
+
     public static Hashtable<String, Command> getCommandHooks(int assignedType){
 
         Hashtable<String, Command> commands = new Hashtable<>();

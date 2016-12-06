@@ -3,6 +3,7 @@ package com.kylegoodale.keval.server;
 import javax.xml.crypto.Data;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * The Database class handles the storing of the data and processing of commands
@@ -51,6 +52,12 @@ public class Database {
                 this.setCommand(args, TYPE_STRING)
         ));
 
+        this.commands.put("lcreate", new Command( TYPE_SYSTEM, false,
+            "Creates a new list at the specified key. LCREATE <key>",
+            (String[] args, DataType dataObj) ->
+                this.setCommand(args, TYPE_LIST)
+        ));
+
         this.commands.put("del", new Command( TYPE_SYSTEM, false,
             "Deletes the key passed. DEL <key>",
             (String[] args, DataType dataObj) ->
@@ -64,25 +71,32 @@ public class Database {
         ));
 
 
-
         // Add the commands for the other data types
         this.commands.putAll(StringType.getCommandHooks(TYPE_STRING));
+        this.commands.putAll(ListType.getCommandHooks(TYPE_LIST));
 
 
         // After all the commands have been added we need to generate the help table
         this.helpTable = "KeVal Commands: \n";
-        this.commands.forEach((k,v) -> this.helpTable += k + ":" + v.helpText + "\n");
+        this.commands.forEach((k,v) -> this.helpTable += String.format( "%10s : %s\n", k.toUpperCase(), v.helpText));
     }
 
     public String handleCommand( String[] cmdArgs ){
-        Command command = this.commands.get(cmdArgs[0]);
-        DataType dataObject = null;
+        try {
+            Command command = this.commands.get(cmdArgs[0]);
+            if (command == null) {
+                return "Error: Invalid command. Use the 'help' command to view a list of valid commands";
+            }
 
-        if( command.usesObject ){
-            dataObject = this.data.get(cmdArgs[1]);
+            DataType dataObject = null;
+            if (command.usesObject) {
+                dataObject = this.data.get(cmdArgs[1]);
+            }
+
+            return command.handle(cmdArgs, dataObject);
+        } catch( NullPointerException | NoSuchElementException e){
+            return String.format("Error: No data at key: '%s'", cmdArgs[1]);
         }
-
-        return command.handle(cmdArgs, dataObject);
     }
 
     public String deleteCommand(String[] args){
@@ -102,7 +116,10 @@ public class Database {
 
         switch( type ){
             case TYPE_STRING:
-                this.data.put(args[1], (DataType) new StringType(args[2]) );
+                this.data.put(args[1], new StringType(args[2]) );
+                break;
+            case TYPE_LIST:
+                this.data.put(args[1], new ListType());
                 break;
             default:
                 return "ERROR: Unable to set key (Unknown Value)";
