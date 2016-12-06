@@ -74,8 +74,7 @@ public class Database {
         this.commands.forEach((k,v) -> this.helpTable += k + ":" + v.helpText + "\n");
     }
 
-
-    public String handleCommand(String[] cmdArgs){
+    public String handleCommand( String[] cmdArgs ){
         Command command = this.commands.get(cmdArgs[0]);
         DataType dataObject = null;
 
@@ -83,9 +82,8 @@ public class Database {
             dataObject = this.data.get(cmdArgs[1]);
         }
 
-        return command.handle(args, dataObject);
+        return command.handle(cmdArgs, dataObject);
     }
-
 
     public String deleteCommand(String[] args){
         return this.data.remove(args[1]) != null ? "OK" : "Key not found";
