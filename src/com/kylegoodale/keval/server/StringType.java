@@ -9,35 +9,37 @@ import java.util.Hashtable;
 public class StringType implements DataType {
 
 
-    private String value;
+    private String data;
 
     public StringType(String value){
-        this.value = value;
+        this.data = value;
     }
 
-    public String lengthCommand( ){
-        return ""+this.value.length();
+    public String sizeCommand( ){
+        return "" + this.data.length();
     }
 
     public String getValue(){
-        return this.value;
+        return this.data;
     }
 
 
-    public static Hashtable<String, Command> getCommandHooks(int assignedType){
+
+    // Registers all the commands this Datatype will respond to ( See DataType Interface )
+    public static Hashtable<String, Command> getCommandHooks(){
 
         Hashtable<String, Command> commands = new Hashtable<>();
 
-        commands.put("len", new Command( assignedType, true,
+        commands.put("len", new Command( true,
             "Retrieves the length of the string stored at the key. LEN <key>",
             (String args[], DataType dataObj) ->
-                ((StringType)dataObj).lengthCommand()
+                ((StringType)dataObj).sizeCommand()
         ));
 
-        commands.put("get", new Command( assignedType, true,
+        commands.put("get", new Command( true,
             "Retrieves the string value at the key. GET <key> <value>",
             (String args[], DataType dataObj) ->
-                    ((StringType)dataObj).getValue()
+                ((StringType)dataObj).getValue()
         ));
 
         return commands;

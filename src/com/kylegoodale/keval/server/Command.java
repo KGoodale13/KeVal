@@ -6,13 +6,11 @@ package com.kylegoodale.keval.server;
 public class Command {
 
     CommandHandler handler;
-    int type;
     boolean usesObject;
     String helpText;
 
     public Command(){};
-    public Command( int type, boolean usesObj, String help, CommandHandler handler){
-        this.type = type;
+    public Command( boolean usesObj, String help, CommandHandler handler){
         this.usesObject = usesObj;
         this.helpText = help;
         this.handler = handler;

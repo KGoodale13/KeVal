@@ -91,6 +91,9 @@ public class ClientConnection implements CompletionHandler<Integer, Integer> {
 
     // Writes the message to the client via the socket channel
     private void sendClient(String msg){
+        if( msg.length() == 0 ){
+            msg = " ";
+        }
         this.state = WRITE;
         // Empty the buffer so we can add new data
         this.buffer.clear();
