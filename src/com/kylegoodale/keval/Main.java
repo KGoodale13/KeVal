@@ -4,7 +4,11 @@ import com.kylegoodale.keval.server.KevalServer;
 import com.kylegoodale.keval.client.KevalClient;
 
 /**
- * Created by Kyle on 12/2/2016.
+ * KeVal - A Key-Value in-memory database.
+ * To launch a KeVal Client use the 'client' argument
+ * To launch a KeVal Server use the 'server' argument
+ * All connections are localhost only due to the lack of authentication support
+ * KeVal runs on localhost port 9800
  */
 public class Main {
 
@@ -21,11 +25,17 @@ public class Main {
             }
         }
 
-        // default
+        // No args specified print some help info and then start a client
+        System.out.println("------------------------------------------------------------------------------------");
+        System.out.println("Welcome to KeVal!\nNo environment was specified");
+        System.out.println("To launch a KeVal Client use the `client` argument when running this application");
+        System.out.println("To launch a KeVal Server use the `server` argument when running this application");
+        System.out.println("All connections are on localhost:9800 by default");
+        System.out.println("------------------------------------------------------------------------------------");
+        System.out.println("Now launching a KeVal Client...");
         startClient();
 
     }
-
 
     public static void startServer(){
         System.out.println("Starting Keval Server.");

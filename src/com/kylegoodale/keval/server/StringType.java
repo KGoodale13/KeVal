@@ -4,6 +4,7 @@ package com.kylegoodale.keval.server;
 import java.util.Hashtable;
 
 /**
+ * The Default String value DataType, Just stores a simple string
  * Created by Kyle on 11/28/2016.
  */
 public class StringType implements DataType {

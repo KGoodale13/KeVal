@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
+ * The List DataType, Implemented using a LinkedList to allow for fast insertions
+ * and reads from the ends.
  * Created by Kyle on 12/5/2016.
  */
 public class ListType implements DataType{
