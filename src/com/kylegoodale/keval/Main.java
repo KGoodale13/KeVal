@@ -9,6 +9,7 @@ import com.kylegoodale.keval.client.KevalClient;
  * To launch a KeVal Server use the 'server' argument
  * All connections are localhost only due to the lack of authentication support
  * KeVal runs on localhost port 9800
+ * Created By: Kyle Goodale on 12/13/2016
  */
 public class Main {
 
@@ -27,24 +28,22 @@ public class Main {
 
         // No args specified print some help info and then start a client
         System.out.println("------------------------------------------------------------------------------------");
-        System.out.println("Welcome to KeVal!\nNo environment was specified");
+        System.out.println("Welcome to KeVal!\nNo environment was specified! Defaulting to client");
         System.out.println("To launch a KeVal Client use the `client` argument when running this application");
         System.out.println("To launch a KeVal Server use the `server` argument when running this application");
         System.out.println("All connections are on localhost:9800 by default");
         System.out.println("------------------------------------------------------------------------------------");
-        System.out.println("Now launching a KeVal Client...");
         startClient();
-
     }
 
     public static void startServer(){
-        System.out.println("Starting Keval Server.");
+        System.out.println("Starting KeVal Server.");
         KevalServer server = new KevalServer("127.0.0.1", 9800);
         server.start();
     }
 
     public static void startClient(){
-        System.out.println("Starting Keval Client.");
+        System.out.println("Starting KeVal Client.");
         new KevalClient("127.0.0.1", 9800);
 
     }
